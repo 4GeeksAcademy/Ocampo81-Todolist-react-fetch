@@ -5,11 +5,9 @@ import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
 const Home = () => {
-	const [tareas, setTareas] = useState([
-		
-	]);
+	const [tareas, setTareas] = useState([])
 
-	const [inputValue, setInputValue] = useState ("");
+	const [inputValue, setInputValue] = useState ("")
 	
 	const controlarInput = (e) => {
 		setInputValue(e.target.value) 
@@ -30,20 +28,31 @@ const Home = () => {
 
 
 	return (
-		<div className="container">
-			<div className="text-center txt-light my-4">
-				<h1><strong>Todo LIST</strong></h1>
-				<ul>
-					<li><input className= "form-control m-auto" type="text" onChange={controlarInput} onKeyDown={controlarEnter} value={inputValue} placeholder="Ojalá funcione" ></input> </li>
-					{tareas.map((t, index) => <li key={index}>{t} <button onClick={() => deleteItems (index)}><i className="fa-solid fa-trash"></i></button></li>)}
-			
-				</ul>	
-			</div>
-
-				<div className="text-center text-bold my-4 total"> {tareas.length} tasks </ div>
-
+		<div className="container text-center">
+		<h1 className="my-4">TODOS</h1>
+		<div className="input-list-container">
+			<input
+				className="form-control"
+				type="text"
+				onChange={controlarInput}
+				onKeyDown={controlarEnter}
+				value={inputValue}
+				placeholder="Ojalá funcione"
+			/>
+			<ul className="list-container">
+				{tareas.map((tarea, index) => (
+					<li key={index} className="task">
+						{tarea}
+						<button onClick={() => deleteItems(index)} className="delete-button">
+							<i className="fas fa-trash-alt"></i>
+						</button>
+					</li>
+				))}
+			</ul>
 		</div>
-	);
+		<div className="text-bold my-4 total">{tareas.length} tasks</div>
+	</div>
+);
 };
 
 export default Home;

@@ -1,12 +1,44 @@
+.container {
+    margin: 20px;
+}
 
-/* 
+.input-list-container {
+    width: 50%; 
+    margin: 0 auto; 
+}
 
-    You can write your own styles here...
-    
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
+.input-list-container input {
+    width: 100%; 
+    margin-bottom: 20px; 
+}
 
-*/
+.list-container {
+    margin-top: 20px; 
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    margin-top: 10px; 
+}
+
+.task:first-child {
+    margin-top: 0;
+}
+
+.delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.delete-button .fas {
+    color: red;
+}
