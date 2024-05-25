@@ -1,29 +1,85 @@
-import React, { useState } from "react";
-
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
+import React, { useState, useEffect } from "react";
 
 //create your first component
 const Home = () => {
-	const [tareas, setTareas] = useState([])
+	const [tareas, setTareas] = useState([]);
+	const [inputValue, setInputValue] = useState("");
 
-	const [inputValue, setInputValue] = useState ("")
-	
 	const controlarInput = (e) => {
 		setInputValue(e.target.value);
 	};
 
-	const controlarEnter = (e) => {
-		if (e.key === "Enter" && inputValue.trim() !== "") {
-			setTareas([...tareas, inputValue]);
-			setInputValue("");
+	const getTareas = async () => {
+		try {
+			const response = await fetch("https://playground.4geeks.com/apis/fake/todos/user/alesanchezr");
+			if (!response.ok) {
+				throw new Error("Error fetching tasks");
+			}
+			const data = await response.json();
+			if (data && Array.isArray(data)) {
+				setTareas(data);
+			}
+		} catch (error) {
+			console.error("Error en el fetch de tareas", error);
 		}
 	};
 
-	const deleteItems = (index) => {
-		setTareas((prevState) =>
-			prevState.filter((_, i) => i !== index)
-		);
+	useEffect(() => {
+		getTareas();
+	}, []);
+
+	const controlarEnter = async (e) => {
+		if (e.key === "Enter" && inputValue.trim() !== "") {
+			const nuevaTarea = { label: inputValue, done: false };
+			try {
+				const response = await fetch('https://playground.4geeks.com/apis/fake/todos/user/alesanchezr', {
+					method: "POST",
+					body: JSON.stringify(nuevaTarea),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				});
+				if (!response.ok) {
+					throw new Error("Error agregando tarea");
+				}
+				const data = await response.json();
+				setTareas((prevTareas) => [...prevTareas, data]);
+				setInputValue("");
+			} catch (error) {
+				console.error("Error agregando tareas", error);
+			}
+		}
+	};
+
+	const deleteItems = async (index) => {
+		const tareaId = tareas[index].id;
+		try {
+			const response = await fetch(`https://playground.4geeks.com/apis/fake/todos/user/alesanchezr/${tareaId}`, {
+				method: "DELETE"
+			});
+			if (!response.ok) {
+				throw new Error("Error eliminando tarea");
+			}
+			setTareas((prevTareas) => prevTareas.filter((_, i) => i !== index));
+		} catch (error) {
+			console.error("Error eliminando tarea", error);
+		}
+	};
+
+	const limpiarTareas = async () => {
+		try {
+			for (let tarea of tareas) {
+				const response = await fetch(`https://playground.4geeks.com/apis/fake/todos/user/alesanchezr/${tarea.id}`, {
+					method: "DELETE"
+				});
+				if (!response.ok) {
+					throw new Error("Error eliminando tarea");
+				}
+			}
+			setTareas([]);
+		} catch (error) {
+			console.error("Error eliminando tareas", error);
+		}
 	};
 
 	return (
@@ -44,7 +100,7 @@ const Home = () => {
 					) : (
 						tareas.map((tarea, index) => (
 							<li key={index} className="task">
-								{tarea}
+								{tarea.label}
 								<button onClick={() => deleteItems(index)} className="delete-button">
 									<i className="fas fa-trash-alt"></i>
 								</button>
@@ -54,6 +110,7 @@ const Home = () => {
 				</ul>
 			</div>
 			<div className="text-bold my-4 total">{tareas.length} tasks</div>
+			<button onClick={limpiarTareas} className="btn btn-danger mt-4">Limpiar todas las tareas</button>
 		</div>
 	);
 };
