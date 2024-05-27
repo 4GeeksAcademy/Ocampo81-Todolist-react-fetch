@@ -1,47 +1,47 @@
 .container {
-	text-align: center;
+    text-align: center;
 }
 
 .input-list-container {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 ul.list-container {
-	list-style-type: none;
-	padding: 0;
+    list-style-type: none;
+    padding: 0;
 }
 
 li.task {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 10px;
-	border: 1px solid #ccc;
-	margin-top: 5px;
-	position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    position: relative;
 }
 
 li.no-tasks {
-	padding: 10px;
-	border: 1px solid #ccc;
-	margin-top: 5px;
-	color: #888;
-	font-style: italic;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    color: #888;
+    font-style: italic;
 }
 
 .delete-button {
-	background: none;
-	border: none;
-	color: #ff0000;
-	cursor: pointer;
-	opacity: 0;
-	transition: opacity 0.3s;
+    background: none;
+    border: none;
+    color: #ff0000;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s;
 }
 
 li.task:hover .delete-button {
-	opacity: 1;
+    opacity: 1;
 }
 
 .text-bold {
-	font-weight: bold;
+    font-weight: bold;
 }
