@@ -33,7 +33,6 @@ const Home = () => {
                 method: 'POST'
             });
             if (response.ok) {
-                alert('User created!');
                 fetchUser();
             }
         } catch (error) {
@@ -86,8 +85,8 @@ const Home = () => {
                 method: 'DELETE'
             });
             if (response.ok) {
-                setTareas([]);
                 setTaskLength(0);
+                await createUser();
             }
         } catch (error) {
             console.error("Error clearing tasks:", error);
